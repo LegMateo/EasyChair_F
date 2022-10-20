@@ -12,14 +12,6 @@
       EasyChairPayment
     </a>
 
-    <li class="navbar-nav me-5 mb-2 mb-lg-0">
-      <router-link to="/">Home</router-link>
-    </li>
-
-    <li class="navbar-nav me-auto mb-2 mb-lg-0">
-      <router-link to="/about">About</router-link>
-    </li>
-
     <h2 class="dejt">
       <span id="datum"></span>
     </h2>
@@ -59,9 +51,6 @@
       </div>
     </div>
   </nav>
-
-  <router-view />
-
   <div class="container-fluid">
     <div class="row justify-content-md-center">
       <div
@@ -79,14 +68,17 @@
       </div>
     </div>
   </div>
-
-  <div class="container">
+  <div class="container" style="max-width: 90%">
     <div class="row justify-content-md-center">
       <div class="col col-lg-2">
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation example" id="Prev">
           <ul class="pagination">
             <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
+              <a
+                class="page-link"
+                href="#"
+                aria-label="Previous"
+                style="position: inherit">
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
               </a>
@@ -94,14 +86,21 @@
           </ul>
         </nav>
       </div>
-      <div class="col"></div>
+      <div class="col">
+        <span id="pagename"></span>
+      </div>
       <div class="col col-lg-2">
         <nav
+          id="Next"
           aria-label="Page navigation example"
-          style="float: right; position: sticky">
+          style="float: right">
           <ul class="pagination">
             <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
+              <a
+                class="page-link"
+                href="#"
+                aria-label="Previous"
+                style="position: inherit">
                 <span class="sr-only">Next</span>
                 <span aria-hidden="true">&raquo;</span>
               </a>
@@ -111,7 +110,30 @@
       </div>
     </div>
   </div>
+
+  <router-view />
 </template>
+
+<script>
+import MaroFamilyBeach from "@/views/MaroFamilyBeach.vue";
+import ReverolBeach from "@/views/ReverolBeach.vue";
+import SunsetBeach from "@/views/SunsetBeach.vue";
+import MarinaBeach from "@/views/MarinaBeach.vue";
+import SurfmaniaBeach from "@/views/SurfmaniaBeach.vue";
+import Navigation from "@/components/Navigation.vue";
+import OpenRegister from "@/components/OpenRegister.vue";
+export default {
+  components: {
+    MaroFamilyBeach,
+    ReverolBeach,
+    SunsetBeach,
+    MarinaBeach,
+    SurfmaniaBeach,
+    Navigation,
+    OpenRegister,
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -136,9 +158,10 @@ nav {
 }
 
 .dejt {
-  padding-right: 4%;
-  right: 0;
-  padding-top: 2%;
+  position: absolute;
+  bottom: 0;
+  right: 60px;
+  width: 300px;
 }
 
 .slide {
