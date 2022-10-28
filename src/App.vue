@@ -158,10 +158,8 @@ nav {
 }
 
 .dejt {
-  position: absolute;
-  bottom: 0;
-  right: 60px;
-  width: 300px;
+  position: static;
+  text-align: right;
 }
 
 .slide {
