@@ -1,8 +1,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import Payment from "@/views/Payment.vue";
 
 createApp(App).use(router).mount("#app");
+createApp(Payment).use(Payment);
 
 let today = new Date();
 let dd = String(today.getDate()).padStart(2, "0");
@@ -13,6 +15,7 @@ today = dd + "." + mm + "." + yyyy + ".";
 
 //console.log(today);
 
+//Datepicker
 document.getElementById("datum").innerHTML = today;
 $(document).ready(function () {
   $(".datepicker").datepicker({
@@ -27,16 +30,6 @@ $(document).ready(function () {
     $(this).addClass("select");
   });
 });
-
-document.getElementById("butun").onclick = function () {
-  let x = document.getElementById("gname");
-  console.log(x);
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-};
 
 //document.getElementById("myButton").innerHTML = router.push("/reverolbeach");
 
@@ -121,3 +114,14 @@ document.getElementById("Next").onclick = function () {
     }
   }
 };
+//Payment method
+/*
+document.getElementById("cashbtn").onclick = function () {
+  let x = document.getElementById("gname");
+  console.log(x);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};*/
