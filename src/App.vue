@@ -1,5 +1,6 @@
 <template>
   <nav
+    v-if="!$route.meta.hideNavbar"
     class="navbar bg-light"
     style="padding-left: 10px; padding-right: 10px; position: sticky; top: 0">
     <a class="navbar-brand" href="#">
@@ -51,7 +52,7 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid">
+  <div class="container-fluid" v-if="!$route.meta.hideNavbar">
     <div class="row justify-content-md-center">
       <div
         class="col col-lg-6"
@@ -68,7 +69,7 @@
       </div>
     </div>
   </div>
-  <div class="container" style="max-width: 90%">
+  <div class="container" style="max-width: 90%" v-if="!$route.meta.hideNavbar">
     <div class="row justify-content-md-center">
       <div class="col col-lg-2">
         <nav aria-label="Page navigation example" id="Prev">

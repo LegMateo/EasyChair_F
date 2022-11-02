@@ -38,16 +38,25 @@ const routes = [
     path: "/payment",
     name: "payment",
     component: Payment,
+    meta: {
+      hideNavbar: true,
+    },
   },
   {
     path: "/login",
     name: "login",
     component: Login,
+    meta: {
+      hideNavbar: true,
+    },
   },
   {
     path: "/loginadmin",
     name: "loginadmin",
     component: LoginAdmin,
+    meta: {
+      hideNavbar: true,
+    },
   },
 ];
 

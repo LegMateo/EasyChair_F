@@ -1,8 +1,7 @@
 <template>
-  <div class="container-fluid conbody">
+  <div class="container-fluid conbody" style="margin-top: 1%">
     <div class="container">
       <div class="row">
-        <div class="col-auto"></div>
         <div class="col-1 logo">
           <img
             src="@/assets/logo_beach.png"
@@ -15,177 +14,81 @@
         <div class="col-4 name">
           <h1>Parasol no 621</h1>
         </div>
-        <div class="col-auto"></div>
       </div>
 
-      <div class="row" style="margin-top: 3vh; height: 6vh">
-        <div class="col-12 daysform">
-          <form name="frm">
-            <div class="form-group">
-              <label for="chairs">Chairs</label>
-              <input
-                value="2"
-                type="number"
-                min="1"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="2" />
+      <form
+        class="row g-3 needs-validation"
+        onsubmit="return false;"
+        novalidate>
+        <div class="daysform">
+          <div class="row" style="margin-top: 3vh; height: 6vh">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="chairs">Chairs</label>
+                <input
+                  value="2"
+                  type="number"
+                  min="1"
+                  class="form-control"
+                  id="chairs1"
+                  placeholder="2"
+                  required />
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
+          </div>
 
-      <div class="row" style="margin-top: 4vh; height: 6vh">
-        <div class="col-12 daysform">
-          <form autocomplete="off" name="frm">
-            <div class="card-header">
-              <label for="fromto">Begin Date</label>
-              <input
-                type="text"
-                id="dp1"
-                class="datepicker"
-                placeholder="From"
-                name="date"
-                readonly /><span class="fa fa-calendar"></span>
+          <div class="row" style="margin-top: 4vh; height: 6vh">
+            <div class="col-12">
+              <div class="card-header">
+                <label for="dp1">Begin Date</label>
+                <input
+                  type="text"
+                  id="dp1"
+                  class="datepicker form-control"
+                  placeholder="From"
+                  name="date"
+                  required /><span class="fa fa-calendar"></span>
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
+          </div>
 
-      <div class="row" style="margin-top: 4vh; height: 6vh">
-        <div class="col-12 daysform">
-          <form autocomplete="off" name="frm">
-            <div class="card-header">
-              <label for="fromto">End Date</label>
-              <input
-                type="text"
-                id="dp1"
-                class="datepicker"
-                placeholder="To"
-                name="date"
-                readonly /><span class="fa fa-calendar"></span>
+          <div class="row" style="margin-top: 4vh; height: 6vh">
+            <div class="col-12">
+              <div class="card-header">
+                <label for="fromto">End Date</label>
+                <input
+                  type="text"
+                  id="dp1"
+                  class="datepicker form-control"
+                  placeholder="To"
+                  name="date"
+                  required /><span class="fa fa-calendar"></span>
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
+          </div>
 
-      <hr class="hr-lines" />
-      <div class="container-fluid">
-        <button
-          id="cashbtn"
-          type="button"
-          class="btn btn-primary btn-lg btn btn1"
-          @click="cash()">
-          Cash
-        </button>
-        <button
-          id="roombtn"
-          type="button"
-          class="btn btn-primary btn-lg btn btn2"
-          @click="visible()">
-          Room
-        </button>
-      </div>
-      <button
-        style="
-          margin-top: 4vh;
-          width: 30%;
-          margin-left: auto;
-          margin-right: auto;
-        "
-        id="payc"
-        type="button"
-        class="btn btn-primary btn-lg btn btn3">
-        Proceed Payment
-      </button>
-      <div class="row" style="margin-top: 4vh; height: 6vh">
-        <div class="col-12 daysform">
-          <form autocomplete="off" name="frm">
-            <div class="card-header">
-              <label id="label1" for="example">Guest name</label>
-              <input
-                type="text"
-                id="gname"
-                class="guestnamex"
-                placeholder="Ex. John"
-                name="name"
-                required />
-            </div>
-          </form>
-        </div>
-      </div>
+          <hr class="hr-lines" />
+          <div class="container-fluid">
+            <button
+              id="cashbtn"
+              type="submit"
+              class="btn btn-primary btn-lg btn btn1"
+              @click="cash()">
+              Cash
+            </button>
 
-      <div class="row" style="margin-top: 4vh; height: 6vh">
-        <div class="col-12 daysform">
-          <form autocomplete="off" name="frm">
-            <div class="card-header">
-              <label id="label2" for="example">Guest Surname</label>
-              <input
-                type="text"
-                id="gsurname"
-                class="guestnamex"
-                placeholder="Ex. Smith"
-                name="surname"
-                required />
-            </div>
-          </form>
+            <button
+              id="roombtn"
+              type="submit"
+              class="btn btn-primary btn-lg btn btn2"
+              @click="visible()">
+              Room
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
 
-      <div class="row" style="margin-top: 4vh; height: 6vh">
-        <div class="col-12 daysform">
-          <form autocomplete="off">
-            <div class="card-header">
-              <label id="label3" for="example">Room number</label>
-              <select class="form-control" id="roomnumber">
-                <option>A11</option>
-                <option>A12</option>
-                <option>A12</option>
-                <option>A14</option>
-                <option>A15</option>
-                <option>A16</option>
-                <option>B11</option>
-                <option>B12</option>
-                <option>B13</option>
-                <option>B14</option>
-                <option>B15</option>
-                <option>B16</option>
-                <option>C11</option>
-                <option>C12</option>
-                <option>C13</option>
-                <option>C14</option>
-                <option>C15</option>
-                <option>C16</option>
-                <option>D11</option>
-                <option>D12</option>
-                <option>D13</option>
-                <option>D14</option>
-                <option>D15</option>
-                <option>D16</option>
-                <option>F11</option>
-                <option>F12</option>
-                <option>F13</option>
-                <option>F14</option>
-                <option>F15</option>
-                <option>F16</option>
-                <option>G11</option>
-                <option>G12</option>
-                <option>G13</option>
-                <option>G14</option>
-                <option>G15</option>
-                <option>G16</option>
-                <option>H11</option>
-                <option>H12</option>
-                <option>H13</option>
-                <option>H14</option>
-                <option>H15</option>
-                <option>H16</option>
-              </select>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="container-fluid">
+      <form class="row g-3 needs-validation" novalidate>
         <button
           style="
             margin-top: 4vh;
@@ -193,12 +96,118 @@
             margin-left: auto;
             margin-right: auto;
           "
-          id="pay"
-          type="button"
-          class="btn btn-primary btn-lg btn btn3">
+          id="payc"
+          type="submit"
+          class="btn btn-primary btn-lg btn btn3"
+          @click="validcheck()">
           Proceed Payment
         </button>
-      </div>
+      </form>
+
+      <form class="row g-3 needs-validation" novalidate>
+        <div class="daysform">
+          <div class="row" style="margin-top: 4vh; height: 6vh">
+            <div class="col-12">
+              <form autocomplete="off" name="frm">
+                <div class="card-header">
+                  <label id="label1" for="example">Guest name</label>
+                  <input
+                    type="text"
+                    id="gname"
+                    minlength="2"
+                    class="guestnamex form-control"
+                    placeholder="Ex. John"
+                    name="name"
+                    required />
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 4vh; height: 6vh">
+            <div class="col-12">
+              <div class="card-header">
+                <label id="label2" for="gsurname">Guest Surname</label>
+                <input
+                  type="text"
+                  id="gsurname"
+                  minlength="2"
+                  class="guestnamex form-control"
+                  placeholder="Ex. Smith"
+                  name="surname"
+                  required />
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 4vh; height: 6vh">
+            <div class="col-12">
+              <div class="card-header">
+                <label id="label3" for="example">Room number</label>
+                <select class="form-control" id="roomnumber">
+                  <option>A11</option>
+                  <option>A12</option>
+                  <option>A12</option>
+                  <option>A14</option>
+                  <option>A15</option>
+                  <option>A16</option>
+                  <option>B11</option>
+                  <option>B12</option>
+                  <option>B13</option>
+                  <option>B14</option>
+                  <option>B15</option>
+                  <option>B16</option>
+                  <option>C11</option>
+                  <option>C12</option>
+                  <option>C13</option>
+                  <option>C14</option>
+                  <option>C15</option>
+                  <option>C16</option>
+                  <option>D11</option>
+                  <option>D12</option>
+                  <option>D13</option>
+                  <option>D14</option>
+                  <option>D15</option>
+                  <option>D16</option>
+                  <option>F11</option>
+                  <option>F12</option>
+                  <option>F13</option>
+                  <option>F14</option>
+                  <option>F15</option>
+                  <option>F16</option>
+                  <option>G11</option>
+                  <option>G12</option>
+                  <option>G13</option>
+                  <option>G14</option>
+                  <option>G15</option>
+                  <option>G16</option>
+                  <option>H11</option>
+                  <option>H12</option>
+                  <option>H13</option>
+                  <option>H14</option>
+                  <option>H15</option>
+                  <option>H16</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <button
+            style="
+              margin-top: 4vh;
+              width: 30%;
+              margin-left: auto;
+              margin-right: auto;
+            "
+            id="pay"
+            type="submit"
+            class="btn btn-primary btn-lg btn btn3"
+            @click="validcheck()">
+            Proceed Payment
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -213,125 +222,196 @@ export default {
   },
   methods: {
     visible() {
-      const btnr = document.getElementById("roombtn");
-      btnr.style.backgroundColor = "rgb(28, 43, 214)";
-      btnr.style.color = "#97c9fc";
+      (function () {
+        "use strict";
 
-      const btnc = document.getElementById("cashbtn");
-      btnc.style.backgroundColor = "rgba(95, 255, 95, 0.678)";
-      btnc.style.color = "rgb(25, 122, 43)";
-      btnc.style.borderColor = "#ced4da";
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
 
-      const status = "room";
-      let x = document.getElementById("gsurname");
-      let y = document.getElementById("gname");
-      let z = document.getElementById("roomnumber");
-      let h = document.getElementById("pay");
-      let c = document.getElementById("payc");
-      let g1 = document.getElementById("label1");
-      let g2 = document.getElementById("label2");
-      let g3 = document.getElementById("label3");
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              } else {
+                const btnr = document.getElementById("roombtn");
+                btnr.style.backgroundColor = "rgb(28, 43, 214)";
+                btnr.style.color = "#97c9fc";
 
-      if ((x.style.display = "none")) {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-      if ((y.style.display = "none")) {
-        y.style.display = "block";
-      } else {
-        y.style.display = "none";
-      }
-      if ((z.style.display = "none")) {
-        z.style.display = "block";
-      } else {
-        z.style.display = "none";
-      }
-      if ((g1.style.display = "none")) {
-        g1.style.display = "block";
-      } else {
-        g1.style.display = "none";
-      }
-      if ((g2.style.display = "none")) {
-        g2.style.display = "block";
-      } else {
-        g2.style.display = "none";
-      }
-      if ((g3.style.display = "none")) {
-        g3.style.display = "block";
-      } else {
-        g3.style.display = "none";
-      }
-      if ((h.style.display = "none")) {
-        h.style.display = "block";
-      } else {
-        h.style.display = "none";
-      }
-      if ((c.style.display = "block")) {
-        c.style.display = "none";
-      } else {
-        c.style.display = "block";
-      }
+                const btnc = document.getElementById("cashbtn");
+                btnc.style.backgroundColor = "rgba(95, 255, 95, 0.678)";
+                btnc.style.color = "rgb(25, 122, 43)";
+                btnc.style.borderColor = "#ced4da";
+
+                const status = "room";
+                let x = document.getElementById("gsurname");
+                let y = document.getElementById("gname");
+                let z = document.getElementById("roomnumber");
+                let h = document.getElementById("pay");
+                let c = document.getElementById("payc");
+                let g1 = document.getElementById("label1");
+                let g2 = document.getElementById("label2");
+                let g3 = document.getElementById("label3");
+
+                if ((x.style.display = "none")) {
+                  x.style.display = "block";
+                } else {
+                  x.style.display = "none";
+                }
+                if ((y.style.display = "none")) {
+                  y.style.display = "block";
+                } else {
+                  y.style.display = "none";
+                }
+                if ((z.style.display = "none")) {
+                  z.style.display = "block";
+                } else {
+                  z.style.display = "none";
+                }
+                if ((g1.style.display = "none")) {
+                  g1.style.display = "block";
+                } else {
+                  g1.style.display = "none";
+                }
+                if ((g2.style.display = "none")) {
+                  g2.style.display = "block";
+                } else {
+                  g2.style.display = "none";
+                }
+                if ((g3.style.display = "none")) {
+                  g3.style.display = "block";
+                } else {
+                  g3.style.display = "none";
+                }
+                if ((h.style.display = "none")) {
+                  h.style.display = "block";
+                } else {
+                  h.style.display = "none";
+                }
+                if ((c.style.display = "block")) {
+                  c.style.display = "none";
+                } else {
+                  c.style.display = "block";
+                }
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
     },
 
     cash() {
-      const btnr = document.getElementById("cashbtn");
-      btnr.style.backgroundColor = "rgb(25, 122, 43)";
-      btnr.style.color = "rgba(95, 255, 95, 0.678)";
+      (function () {
+        "use strict";
 
-      const btnc = document.getElementById("roombtn");
-      btnc.style.backgroundColor = "rgba(43, 109, 252, 0.678)";
-      btnc.style.color = "rgb(28, 43, 214)";
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
 
-      const status = "cash";
-      let x = document.getElementById("gsurname");
-      let y = document.getElementById("gname");
-      let z = document.getElementById("roomnumber");
-      let h = document.getElementById("pay");
-      let c = document.getElementById("payc");
-      let g1 = document.getElementById("label1");
-      let g2 = document.getElementById("label2");
-      let g3 = document.getElementById("label3");
-      if ((x.style.display = "block")) {
-        x.style.display = "none";
-      } else {
-        x.style.display = "block";
-      }
-      if ((y.style.display = "block")) {
-        y.style.display = "none";
-      } else {
-        y.style.display = "block";
-      }
-      if ((z.style.display = "block")) {
-        z.style.display = "none";
-      } else {
-        z.style.display = "block";
-      }
-      if ((g1.style.display = "block")) {
-        g1.style.display = "none";
-      } else {
-        g1.style.display = "block";
-      }
-      if ((g2.style.display = "block")) {
-        g2.style.display = "none";
-      } else {
-        g2.style.display = "block";
-      }
-      if ((g3.style.display = "block")) {
-        g3.style.display = "none";
-      } else {
-        g3.style.display = "block";
-      }
-      if ((h.style.display = "block")) {
-        h.style.display = "none";
-      } else {
-        h.style.display = "block";
-      }
-      if ((c.style.display = "none")) {
-        c.style.display = "block";
-      } else {
-        c.style.display = "none";
-      }
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              } else {
+                const btnr = document.getElementById("cashbtn");
+                btnr.style.backgroundColor = "rgb(25, 122, 43)";
+                btnr.style.color = "rgba(95, 255, 95, 0.678)";
+
+                const btnc = document.getElementById("roombtn");
+                btnc.style.backgroundColor = "rgba(43, 109, 252, 0.678)";
+                btnc.style.color = "rgb(28, 43, 214)";
+
+                const status = "cash";
+                let x = document.getElementById("gsurname");
+                let y = document.getElementById("gname");
+                let z = document.getElementById("roomnumber");
+                let h = document.getElementById("pay");
+                let c = document.getElementById("payc");
+                let g1 = document.getElementById("label1");
+                let g2 = document.getElementById("label2");
+                let g3 = document.getElementById("label3");
+
+                if ((x.style.display = "block")) {
+                  x.style.display = "none";
+                } else {
+                  x.style.display = "block";
+                }
+                if ((y.style.display = "block")) {
+                  y.style.display = "none";
+                } else {
+                  y.style.display = "block";
+                }
+                if ((z.style.display = "block")) {
+                  z.style.display = "none";
+                } else {
+                  z.style.display = "block";
+                }
+                if ((g1.style.display = "block")) {
+                  g1.style.display = "none";
+                } else {
+                  g1.style.display = "block";
+                }
+                if ((g2.style.display = "block")) {
+                  g2.style.display = "none";
+                } else {
+                  g2.style.display = "block";
+                }
+                if ((g3.style.display = "block")) {
+                  g3.style.display = "none";
+                } else {
+                  g3.style.display = "block";
+                }
+                if ((h.style.display = "block")) {
+                  h.style.display = "none";
+                } else {
+                  h.style.display = "block";
+                }
+
+                if ((c.style.display = "none")) {
+                  c.style.display = "block";
+                } else {
+                  c.style.display = "none";
+                }
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    },
+    validcheck() {
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        "use strict";
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
     },
   },
 };
@@ -461,9 +541,8 @@ label {
 }
 
 .daysform {
-  height: 3vh;
   width: 25%;
-  align-self: center;
+
   margin-left: auto;
   margin-right: auto;
 }

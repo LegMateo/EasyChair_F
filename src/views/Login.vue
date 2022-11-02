@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid conbody">
+  <div class="container-fluid conbody" style="margin-top: 10%">
     <div class="container">
       <div class="row">
         <div class="col-6 logo">
@@ -16,38 +16,41 @@
         </div>
       </div>
 
-      <div class="row" style="margin-top: 3vh; height: 6vh">
-        <div class="col-12 loginpass">
-          <form name="frm">
-            <div class="form-group">
-              <label for="chairs">Cashier Login</label>
-              <input
-                type="password"
-                minlength="4"
-                maxlength="22"
-                class="form-control"
-                id="exampleFormControlInput1" />
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div class="row" style="margin-top: 2vh; height: 6vh">
-        <div class="col-12 logina">
-          <a href="#" id="Adminlogin" class="admin" @click="toAdmin()"
-            >Admin login</a
+      <form
+        class="row g-3 needs-validation"
+        style="margin-top: 3vh; height: 6vh"
+        novalidate>
+        <div class="col-md-4 loginpass">
+          <label for="validationCustom001" class="form-label"
+            >Cashier Login</label
           >
+          <input
+            type="password"
+            minlength="4"
+            maxlength="22"
+            class="form-control"
+            id="validationCustom001"
+            required />
         </div>
-      </div>
 
-      <div class="container-fluid">
-        <button
-          id="roombtn"
-          type="button"
-          class="btn btn-primary btn-lg btn btnlg">
-          Login
-        </button>
-      </div>
+        <div class="row" style="margin-top: 4vh; height: 6vh">
+          <div class="col-12 logina">
+            <a href="#" id="Adminlogin" class="admin" @click="toAdmin()"
+              >Admin login</a
+            >
+          </div>
+        </div>
+
+        <div class="container-fluid" style="margin-top: 2vh; height: 6vh">
+          <button
+            id="roombtn"
+            type="submit"
+            class="btn btn-primary btn-lg btn btnlg"
+            @click="validcheck()">
+            Login
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -60,7 +63,33 @@ export default {
       name: "Vue.js",
     };
   },
+
   methods: {
+    validcheck() {
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        "use strict";
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    },
     toAdmin() {
       this.$router.push("/loginadmin");
     },
@@ -98,13 +127,14 @@ label {
 
 .logo {
   margin-left: auto;
+
   width: 160px;
   height: 160px;
 }
 
 .name {
+  width: auto;
   margin-right: auto;
-  align-self: flex-end;
 }
 
 .loginpass {
