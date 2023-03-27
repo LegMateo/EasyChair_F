@@ -42,7 +42,7 @@ let imena = [
 ];
 
 let routs = [
-  "/",
+  "/maro",
   "/reverolbeach",
   "/sunsetbeach",
   "/marinabeach",
@@ -114,6 +114,7 @@ document.getElementById("Next").onclick = function () {
     }
   }
 };
+
 //Payment method
 /*
 document.getElementById("cashbtn").onclick = function () {

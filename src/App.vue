@@ -32,7 +32,9 @@
       id="offcanvasNavbar"
       aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">User</h5>
+        <h5 v-if="auth.authenticated">
+          {{ auth.userName }} {{ auth.userSurname }}
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -42,12 +44,11 @@
 
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a>Home</a>
-          </li>
-          <li class="nav-item">
-            <a>Link</a>
-          </li>
+          <span v-if="auth.authenticated">
+            <a @click="logout" class="btn btn-info my-2 my-sm-0 mr-2" href="#"
+              >Logout</a
+            >
+          </span>
         </ul>
       </div>
     </div>
@@ -116,55 +117,68 @@
 </template>
 
 <script>
-import MaroFamilyBeach from "@/views/MaroFamilyBeach.vue";
-import ReverolBeach from "@/views/ReverolBeach.vue";
-import SunsetBeach from "@/views/SunsetBeach.vue";
-import MarinaBeach from "@/views/MarinaBeach.vue";
-import SurfmaniaBeach from "@/views/SurfmaniaBeach.vue";
-import Navigation from "@/components/Navigation.vue";
-import OpenRegister from "@/components/OpenRegister.vue";
-export default {
-  components: {
-    MaroFamilyBeach,
-    ReverolBeach,
-    SunsetBeach,
-    MarinaBeach,
-    SurfmaniaBeach,
-    Navigation,
-    OpenRegister,
-  },
-};
+  import store from "@/store.js";
+  import MaroFamilyBeach from "@/views/MaroFamilyBeach.vue";
+  import ReverolBeach from "@/views/ReverolBeach.vue";
+  import SunsetBeach from "@/views/SunsetBeach.vue";
+  import MarinaBeach from "@/views/MarinaBeach.vue";
+  import SurfmaniaBeach from "@/views/SurfmaniaBeach.vue";
+  import Navigation from "@/components/Navigation.vue";
+  import OpenRegister from "@/components/OpenRegister.vue";
+  import { Auth } from "@/services";
+  export default {
+    data() {
+      return {
+        auth: Auth.state,
+      };
+    },
+    methods: {
+      logout() {
+        Auth.logout();
+        this.$router.go();
+      },
+    },
+    components: {
+      MaroFamilyBeach,
+      ReverolBeach,
+      SunsetBeach,
+      MarinaBeach,
+      SurfmaniaBeach,
+      Navigation,
+      OpenRegister,
+    },
+  };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
     color: #2c3e50;
+  }
 
-    &.router-link-exact-active {
-      color: #42b983;
+  nav {
+    padding: 30px;
+
+    a {
+      font-weight: bold;
+      color: #2c3e50;
+
+      &.router-link-exact-active {
+        color: #42b983;
+      }
     }
   }
-}
 
-.dejt {
-  position: static;
-  text-align: right;
-}
+  .dejt {
+    position: static;
+    text-align: right;
+  }
 
-.slide {
-  min-height: 75vh;
-  box-sizing: border-box;
-}
+  .slide {
+    min-height: 75vh;
+    box-sizing: border-box;
+  }
 </style>

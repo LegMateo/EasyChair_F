@@ -9,7 +9,7 @@
 </template>
 
 <script>
-export default {
-  name: "Marina Beach",
-};
+  export default {
+    name: "Marina Beach",
+  };
 </script>

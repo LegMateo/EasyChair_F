@@ -7,10 +7,11 @@ import SurfmaniaBeach from "../views/SurfmaniaBeach.vue";
 import Payment from "@/views/Payment.vue";
 import Login from "@/views/Login.vue";
 import LoginAdmin from "@/views/LoginAdmin.vue";
+import { Auth } from "@/services";
 
 const routes = [
   {
-    path: "/",
+    path: "/maro",
     name: "marofamilybeach",
     component: MaroFamilyBeach,
   },
@@ -63,6 +64,20 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const javne = "/loginadmin";
+  const loginPotreban = !javne.includes(to.name);
+  const user = Auth.getUser();
+
+  if (loginPotreban && !user) {
+    next("/login");
+    //next("/loginadmin");
+    return;
+  }
+
+  next();
 });
 
 export default router;
