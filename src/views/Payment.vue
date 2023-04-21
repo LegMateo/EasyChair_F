@@ -16,19 +16,19 @@
         </div>
       </div>
 
-      <form class="row g-3 needs-validation" novalidate>
+      <form @submit.prevent="test" class="row g-3 needs-validation" novalidate>
         <div class="daysform">
           <div class="row" style="margin-top: 3vh; height: 6vh">
             <div class="col-12">
               <div class="form-group">
                 <label for="chairs">Chairs</label>
                 <input
-                  value="2"
+                  v-model="chairs"
                   type="number"
                   min="1"
-                  class="form-control"
+                  class="form-control guestnamex"
                   id="chairs1"
-                  placeholder="2"
+                  placeholder="0"
                   required />
               </div>
             </div>
@@ -36,30 +36,27 @@
 
           <div class="row" style="margin-top: 4vh; height: 6vh">
             <div class="col-12">
-              <div class="card-header">
-                <label for="dp1">Begin Date</label>
-                <input
-                  type="text"
-                  id="dp1"
-                  class="datepicker form-control"
-                  placeholder="From"
-                  name="date"
-                  required /><span class="fa fa-calendar"></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" style="margin-top: 4vh; height: 6vh">
-            <div class="col-12">
-              <div class="card-header">
-                <label for="fromto">End Date</label>
-                <input
-                  type="text"
-                  id="dp1"
-                  class="datepicker form-control"
-                  placeholder="To"
-                  name="date"
-                  required /><span class="fa fa-calendar"></span>
+              <div class="form-group">
+                <label>Date range</label>
+                <VueDatePicker
+                  v-model="date"
+                  v-bind:clearable="false"
+                  required
+                  dark
+                  hide-input-icon
+                  range
+                  multi-calendars
+                  auto-apply
+                  placeholder="Select Date"
+                  :min-date="new Date()"
+                  ignore-time-validation
+                  :enable-time-picker="false"
+                  :offset="20"
+                  arrow-navigation
+                  format="dd/MM/yyyy"
+                  value-format="dd-MM-yyyy"
+                  input-class-name="form-control guestnamex ">
+                </VueDatePicker>
               </div>
             </div>
           </div>
@@ -67,20 +64,30 @@
           <hr class="hr-lines" />
           <div class="container-fluid">
             <button
-              v-on:click="(isHidden = true), (isHiddenc = false)"
+              @submit.prevent="cash"
+              v-on:click="
+                (isHidden = true),
+                  (isHiddenc = false),
+                  (this.roomState = false),
+                  (this.cashState = true)
+              "
               id="cashbtn"
               type="button"
-              class="btn btn-primary btn-lg btn btn1"
-              @click="cash()">
+              class="btn btn-primary btn-lg btn btn1">
               Cash
             </button>
 
             <button
-              v-on:click="(isHidden = false), (isHiddenc = true)"
+              @submit.prevent="room"
+              v-on:click="
+                (isHidden = false),
+                  (isHiddenc = true),
+                  (this.roomState = true),
+                  (this.cashState = false)
+              "
               id="roombtn"
               type="button"
-              class="btn btn-primary btn-lg btn btn2"
-              @click="room()">
+              class="btn btn-primary btn-lg btn btn2">
               Room
             </button>
           </div>
@@ -98,7 +105,7 @@
             id="payc"
             type="submit"
             class="btn btn-primary btn-lg btn btn3"
-            @click="validcheck()">
+            @click="validcheck(), col()">
             Proceed Payment
           </button>
         </div>
@@ -109,6 +116,7 @@
               <div class="card-header">
                 <label id="label1" for="example">Guest name</label>
                 <input
+                  v-model="gname"
                   type="text"
                   id="gname"
                   minlength="2"
@@ -125,6 +133,7 @@
               <div class="card-header">
                 <label id="label2" for="gsurname">Guest Surname</label>
                 <input
+                  v-model="gsurname"
                   type="text"
                   id="gsurname"
                   minlength="2"
@@ -140,8 +149,14 @@
             <div class="col-12">
               <div class="card-header">
                 <label id="label3" for="example">Room number</label>
-                <select class="form-control required" id="roomnumber">
-                  <option value="">--Please choose an option--</option>
+                <select
+                  v-model="roomnb"
+                  class="guestnamex form-control"
+                  id="roomnumber"
+                  required>
+                  <option value="" disabled selected hidden>
+                    --Please choose an option--
+                  </option>
 
                   <option value="A11">A11</option>
                   <option value="A12">A12</option>
@@ -203,7 +218,7 @@
             id="pay"
             type="submit"
             class="btn btn-primary btn-lg btn btn3"
-            @click="validcheck()">
+            @click="validcheck(), col()">
             Proceed Payment
           </button>
         </div>
@@ -214,28 +229,66 @@
 
 <script>
   import { Auth } from "@/services";
+  import { Payment } from "@/services";
 
+  import VueDatePicker from "@vuepic/vue-datepicker";
+  import "@vuepic/vue-datepicker/dist/main.css";
+  import "@vuepic/vue-datepicker/src/VueDatePicker/style/main.scss";
+  import { ref } from "vue";
+  const date = ref();
   export default {
     name: "Payment",
+    components: { VueDatePicker },
+
     data() {
       return {
         isHidden: true,
         isHiddenc: true,
-
+        date: "",
         chairs: "",
-        begin: "",
-        end: "",
         gname: "",
         gsurname: "",
+        roomnb: "",
+        cashState: false,
+        roomState: false,
         auth: Auth.state,
       };
     },
+
     methods: {
-      refresh() {
-        this.$router.go();
+      async test() {
+        let success = await Payment.payment(
+          this.chairs,
+          this.date,
+          this.gname,
+          this.gsurname,
+          this.roomnb,
+          this.cashState,
+          this.roomState
+        );
+
+        if (success == true) {
+          this.$router.push({ name: "marofamilybeach" }); //kasnije promijeni
+        }
       },
+      col() {
+        console.log(
+          this.date,
+          this.chairs,
+          this.gname,
+          this.gsurname,
+          this.roomnb,
+          this.cashState,
+          this.roomState
+        );
+      },
+      onMounted() {
+        const startDate = new Date();
+        const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+        date.value = [startDate, endDate];
+      },
+
       room() {
-        const btnr = document.getElementById("roombtn");
         btnr.style.backgroundColor = "rgb(28, 43, 214)";
         btnr.style.color = "#97c9fc";
 
@@ -284,26 +337,30 @@
 </script>
 
 <style>
-  .datepicker::placeholder {
+  select:required:invalid {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: lighter;
     font-style: italic;
     text-align: left;
     float: left;
-    opacity: 0.6;
+
+    color: #212529;
   }
+
   .guestnamex::placeholder {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: lighter;
     font-style: italic;
     text-align: left;
     float: left;
     opacity: 0.6;
+    color: gray;
   }
 
   .guestnamex {
     padding: 0.375rem 0.75rem;
     color: #212529;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+
     appearance: none;
     width: 100%;
     font-size: 1rem;
@@ -392,148 +449,5 @@
     width: 100%;
     align-self: center;
     margin-right: auto;
-  }
-
-  #dp1 {
-    display: block;
-
-    padding: 0.375rem 0.75rem;
-    color: #212529;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 100%;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.375rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-
-  .form-control:focus-visible {
-    outline: 0;
-    box-shadow: 0 0 0 2px rgba(59, 124, 255, 0.8);
-  }
-
-  input:focus-visible {
-    outline: 0;
-    box-shadow: 0 0 0 2px rgba(59, 124, 255, 0.8);
-  }
-
-  ::placeholder {
-    color: #000;
-    opacity: 1;
-  }
-
-  :-ms-input-placeholder {
-    color: #000;
-  }
-
-  ::-ms-input-placeholder {
-    color: #000;
-  }
-
-  button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    outline-width: 0;
-  }
-
-  .datepicker {
-    font-weight: lighter;
-    font-style: italic;
-    text-align: left;
-    float: left;
-    opacity: 1;
-    padding-left: 10px;
-    background-color: #000;
-    color: #fff;
-  }
-
-  .datepicker-dropdown:after {
-    border-bottom: 6px solid #000;
-  }
-
-  thead tr:nth-child(3) th {
-    color: #fff !important;
-    font-weight: bold;
-    padding-top: 20px;
-    padding-bottom: 10px;
-  }
-
-  .dow,
-  .old-day,
-  .day,
-  .new-day {
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 0px !important;
-  }
-
-  .old-day:hover,
-  .day:hover,
-  .new-day:hover,
-  .month:hover,
-  .year:hover,
-  .decade:hover,
-  .century:hover {
-    border-radius: 6px !important;
-    background-color: #eee;
-    color: #000;
-  }
-
-  .active {
-    border-radius: 6px !important;
-    background-image: linear-gradient(#90caf9, #64b5f6) !important;
-    color: #000 !important;
-  }
-
-  .disabled {
-    color: #616161 !important;
-  }
-
-  .prev,
-  .next,
-  .datepicker-switch {
-    border-radius: 0 !important;
-    padding: 20px 10px !important;
-    text-transform: uppercase;
-    font-size: 20px;
-    color: #fff !important;
-    opacity: 0.8;
-  }
-
-  .prev:hover,
-  .next:hover,
-  .datepicker-switch:hover {
-    background-color: inherit !important;
-    opacity: 1;
-  }
-
-  .cell {
-    border: 1px solid #bdbdbd;
-    margin: 2px;
-    cursor: pointer;
-  }
-
-  .cell:hover {
-    border: 1px solid #3d5afe;
-  }
-
-  .cell.select {
-    background-color: #3d5afe;
-    color: #fff;
-  }
-
-  .fa-calendar {
-    color: #fff;
-    font-size: 30px;
-    padding-top: 8px;
-    padding-left: 5px;
-    cursor: pointer;
   }
 </style>

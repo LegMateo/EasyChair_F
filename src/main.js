@@ -16,20 +16,49 @@ today = dd + "." + mm + "." + yyyy + ".";
 //console.log(today);
 
 //Datepicker
-document.getElementById("datum").innerHTML = today;
-$(document).ready(function () {
-  $(".datepicker").datepicker({
-    format: "dd-mm-yyyy",
-    autoclose: true,
-    inline: true,
-    startDate: "0d",
-  });
+// document.getElementById("datum").innerHTML = today;
+// $(document).ready(function () {
+//   $(".datepicker").datepicker({
+//     format: "dd-mm-yyyy",
+//     autoclose: true,
+//     inline: true,
+//     startDate: "0d",
+//   });
 
-  $(".cell").click(function () {
-    $(".cell").removeClass("select");
-    $(this).addClass("select");
-  });
-});
+//   $(".cell").click(function () {
+//     $(".cell").removeClass("select");
+//     $(this).addClass("select");
+//   });
+// });
+
+// Set the inner HTML of an element with ID "datum" to the current date
+
+document.getElementById("datum").innerHTML = today;
+
+// Configure the datepicker widget
+// $(document).ready(function () {
+//   $(".datepicker").datepicker({
+//     format: "dd-mm-yyyy",
+
+//     autoclose: true,
+//     inline: false,
+//     startDate: "0d",
+//   });
+//   $(".datepicker").on("change", function () {
+//     let selected = $(this).val();
+//   });
+// });
+
+// // Add a click event listener to cells with class "cell"
+// let cells = document.querySelectorAll(".cell");
+// cells.forEach(function (cell) {
+//   cell.addEventListener("click", function () {
+//     cells.forEach(function (c) {
+//       c.classList.remove("select");
+//     });
+//     this.classList.add("select");
+//   });
+// });
 
 //document.getElementById("myButton").innerHTML = router.push("/reverolbeach");
 

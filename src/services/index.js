@@ -36,6 +36,23 @@ let Posts = {
   },
 };
 
+let Payment = {
+  async payment(chairs, date, gname, gsurname, roomnb, cashState, roomState) {
+    let response = await Service.post("/payment", {
+      // FAli jos ruta za admina!!!
+      chairs: chairs,
+      date: date,
+      gname: gname,
+      gsurname: gsurname,
+      roomnb: roomnb,
+      cash: cashState,
+      room: roomState,
+    });
+
+    return true;
+  },
+};
+
 let Auth = {
   async login(username, password) {
     let response = await Service.post("/login", {
@@ -78,6 +95,7 @@ let Auth = {
     }
     return false;
   },
+
   state: {
     get toAdmin() {
       $router.push("/loginadmin");
@@ -107,4 +125,4 @@ let Auth = {
     },
   },
 };
-export { Service, Posts, Auth }; // exportamo Service za ručne pozive ili Posts za
+export { Service, Posts, Auth, Payment }; // exportamo Service za ručne pozive ili Posts za
