@@ -8,7 +8,8 @@
             alt="Logo"
             width="160"
             height="160"
-            class="d-inline-block align-text-middle" />
+            class="d-inline-block align-text-middle"
+          />
         </div>
 
         <div class="col-4 name">
@@ -25,11 +26,12 @@
                 <input
                   v-model="chairs"
                   type="number"
-                  min="1"
+                  min="2"
                   class="form-control guestnamex"
                   id="chairs1"
-                  placeholder="0"
-                  required />
+                  placeholder="2"
+                  required
+                />
               </div>
             </div>
           </div>
@@ -55,7 +57,8 @@
                   arrow-navigation
                   format="dd/MM/yyyy"
                   value-format="dd-MM-yyyy"
-                  input-class-name="form-control guestnamex ">
+                  input-class-name="form-control guestnamex "
+                >
                 </VueDatePicker>
               </div>
             </div>
@@ -66,28 +69,25 @@
             <button
               @submit.prevent="cash"
               v-on:click="
-                (isHidden = true),
-                  (isHiddenc = false),
-                  (this.roomState = false),
-                  (this.cashState = true)
+                (isHidden = true), (isHiddenc = false), (cashState = true)
               "
+              value="true"
               id="cashbtn"
               type="button"
-              class="btn btn-primary btn-lg btn btn1">
+              class="btn btn-primary btn-lg btn btn1"
+            >
               Cash
             </button>
 
             <button
               @submit.prevent="room"
               v-on:click="
-                (isHidden = false),
-                  (isHiddenc = true),
-                  (this.roomState = true),
-                  (this.cashState = false)
+                (isHidden = false), (isHiddenc = true), (cashState = false)
               "
               id="roombtn"
               type="button"
-              class="btn btn-primary btn-lg btn btn2">
+              class="btn btn-primary btn-lg btn btn2"
+            >
               Room
             </button>
           </div>
@@ -105,7 +105,8 @@
             id="payc"
             type="submit"
             class="btn btn-primary btn-lg btn btn3"
-            @click="validcheck(), col()">
+            @click="validcheck()"
+          >
             Proceed Payment
           </button>
         </div>
@@ -123,7 +124,8 @@
                   class="guestnamex form-control"
                   placeholder="Ex. John"
                   name="name"
-                  required />
+                  required
+                />
               </div>
             </div>
           </div>
@@ -140,7 +142,8 @@
                   class="guestnamex form-control"
                   placeholder="Ex. Smith"
                   name="surname"
-                  required />
+                  required
+                />
               </div>
             </div>
           </div>
@@ -153,7 +156,8 @@
                   v-model="roomnb"
                   class="guestnamex form-control"
                   id="roomnumber"
-                  required>
+                  required
+                >
                   <option value="" disabled selected hidden>
                     --Please choose an option--
                   </option>
@@ -218,7 +222,8 @@
             id="pay"
             type="submit"
             class="btn btn-primary btn-lg btn btn3"
-            @click="validcheck(), col()">
+            @click="validcheck()"
+          >
             Proceed Payment
           </button>
         </div>
@@ -228,226 +233,228 @@
 </template>
 
 <script>
-  import { Auth } from "@/services";
-  import { Payment } from "@/services";
+import { Auth } from "@/services";
+import { Payment } from "@/services";
+import { ajD } from "@/services/";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import "@vuepic/vue-datepicker/src/VueDatePicker/style/main.scss";
 
-  import VueDatePicker from "@vuepic/vue-datepicker";
-  import "@vuepic/vue-datepicker/dist/main.css";
-  import "@vuepic/vue-datepicker/src/VueDatePicker/style/main.scss";
-  import { ref } from "vue";
-  const date = ref();
-  export default {
-    name: "Payment",
-    components: { VueDatePicker },
+import { ref } from "vue";
+const date = ref();
+export default {
+  name: "Payment",
+  components: { VueDatePicker },
 
-    data() {
-      return {
-        isHidden: true,
-        isHiddenc: true,
-        date: "",
-        chairs: "",
-        gname: "",
-        gsurname: "",
-        roomnb: "",
-        cashState: false,
-        roomState: false,
-        auth: Auth.state,
-      };
+  data() {
+    return {
+      isHidden: true,
+      isHiddenc: true,
+      beach: Auth.state.name,
+      cashier: `${Auth.state.userName} ${Auth.state.userSurname}`,
+      date: "",
+      chairs: "",
+      parasol: Auth.state.id,
+      gname: "",
+      gsurname: "",
+      roomnb: "",
+      cashState: false,
+
+      auth: Auth.state,
+    };
+  },
+
+  methods: {
+    async test() {
+      let success = await Payment.payment(
+        this.beach,
+        this.cashier,
+        this.chairs,
+        this.date,
+        this.parasol,
+        this.gname,
+        this.gsurname,
+        this.roomnb,
+        this.cashState
+      );
+
+      if (success == true) {
+        this.$router.push({ name: "marofamilybeach" }); //kasnije promijeni
+
+        const ruuta = this.$router.resolve({
+          path: `/invoice/${ajD.id}`,
+        });
+
+        window.open(ruuta.href, "_blank");
+      }
     },
 
-    methods: {
-      async test() {
-        let success = await Payment.payment(
-          this.chairs,
-          this.date,
-          this.gname,
-          this.gsurname,
-          this.roomnb,
-          this.cashState,
-          this.roomState
-        );
-
-        if (success == true) {
-          this.$router.push({ name: "marofamilybeach" }); //kasnije promijeni
-        }
-      },
-      col() {
-        console.log(
-          this.date,
-          this.chairs,
-          this.gname,
-          this.gsurname,
-          this.roomnb,
-          this.cashState,
-          this.roomState
-        );
-      },
-      onMounted() {
-        const startDate = new Date();
-        const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
-        date.value = [startDate, endDate];
-      },
-
-      room() {
-        btnr.style.backgroundColor = "rgb(28, 43, 214)";
-        btnr.style.color = "#97c9fc";
-
-        const btnc = document.getElementById("cashbtn");
-        btnc.style.backgroundColor = "rgba(95, 255, 95, 0.678)";
-        btnc.style.color = "rgb(25, 122, 43)";
-        btnc.style.borderColor = "#ced4da";
-      },
-
-      cash() {
-        const btnr = document.getElementById("cashbtn");
-        btnr.style.backgroundColor = "rgb(25, 122, 43)";
-        btnr.style.color = "rgba(95, 255, 95, 0.678)";
-
-        const btnc = document.getElementById("roombtn");
-        btnc.style.backgroundColor = "rgba(43, 109, 252, 0.678)";
-        btnc.style.color = "rgb(28, 43, 214)";
-      },
-      validcheck() {
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function () {
-          "use strict";
-
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.querySelectorAll(".needs-validation");
-
-          // Loop over them and prevent submission
-          Array.prototype.slice.call(forms).forEach(function (form) {
-            form.addEventListener(
-              "submit",
-              function (event) {
-                if (!form.checkValidity()) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
-
-                form.classList.add("was-validated");
-              },
-              false
-            );
-          });
-        })();
-      },
+    onMounted() {
+      const startDate = new Date();
+      const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+      date.value = [startDate, endDate];
     },
-  };
+
+    room() {
+      btnr.style.backgroundColor = "rgb(28, 43, 214)";
+      btnr.style.color = "#97c9fc";
+
+      const btnc = document.getElementById("cashbtn");
+      btnc.style.backgroundColor = "rgba(95, 255, 95, 0.678)";
+      btnc.style.color = "rgb(25, 122, 43)";
+      btnc.style.borderColor = "#ced4da";
+    },
+
+    cash() {
+      const btnr = document.getElementById("cashbtn");
+      btnr.style.backgroundColor = "rgb(25, 122, 43)";
+      btnr.style.color = "rgba(95, 255, 95, 0.678)";
+
+      const btnc = document.getElementById("roombtn");
+      btnc.style.backgroundColor = "rgba(43, 109, 252, 0.678)";
+      btnc.style.color = "rgb(28, 43, 214)";
+    },
+    validcheck() {
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        "use strict";
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    },
+  },
+};
 </script>
 
 <style>
-  select:required:invalid {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: lighter;
-    font-style: italic;
-    text-align: left;
-    float: left;
+select:required:invalid {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: lighter;
+  font-style: italic;
+  text-align: left;
+  float: left;
 
-    color: #212529;
-  }
+  color: #212529;
+}
 
-  .guestnamex::placeholder {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: lighter;
-    font-style: italic;
-    text-align: left;
-    float: left;
-    opacity: 0.6;
-    color: gray;
-  }
+.guestnamex::placeholder {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: lighter;
+  font-style: italic;
+  text-align: left;
+  float: left;
+  opacity: 0.6;
+  color: gray;
+}
 
-  .guestnamex {
-    padding: 0.375rem 0.75rem;
-    color: #212529;
+.guestnamex {
+  padding: 0.375rem 0.75rem;
+  color: #212529;
 
-    appearance: none;
-    width: 100%;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
+  appearance: none;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
 
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.375rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 
-  .btn1 {
-    background-color: rgba(95, 255, 95, 0.678);
-    color: rgb(25, 122, 43);
-    border-color: #ced4da;
-  }
+.btn1 {
+  background-color: rgba(95, 255, 95, 0.678);
+  color: rgb(25, 122, 43);
+  border-color: #ced4da;
+}
 
-  .btn1:hover {
-    background-color: rgb(25, 122, 43) !important;
-    color: rgba(95, 255, 95, 0.678) !important;
-  }
-  .btn2 {
-    background-color: rgba(43, 109, 252, 0.678);
-    color: rgb(28, 43, 214);
-  }
+.btn1:hover {
+  background-color: rgb(25, 122, 43) !important;
+  color: rgba(95, 255, 95, 0.678) !important;
+}
+.btn2 {
+  background-color: rgba(43, 109, 252, 0.678);
+  color: rgb(28, 43, 214);
+}
 
-  .btn2:hover {
-    background-color: rgb(28, 43, 214) !important;
-    color: #97c9fc !important;
-  }
+.btn2:hover {
+  background-color: rgb(28, 43, 214) !important;
+  color: #97c9fc !important;
+}
 
-  .btn {
-    margin-right: 1vh;
-    margin-left: 1vh;
-  }
+.btn {
+  margin-right: 1vh;
+  margin-left: 1vh;
+}
 
-  label {
-    font-weight: lighter;
-    font-style: italic;
-    text-align: left;
-    float: left;
-  }
+label {
+  font-weight: lighter;
+  font-style: italic;
+  text-align: left;
+  float: left;
+}
 
-  .hr-lines {
-    position: inherit;
-    max-width: 500px;
-    margin: 50px auto;
-    text-align: center;
-  }
+.hr-lines {
+  position: inherit;
+  max-width: 500px;
+  margin: 50px auto;
+  text-align: center;
+}
 
-  .logo {
-    margin-left: auto;
-    width: 160px;
-    height: 160px;
-  }
+.logo {
+  margin-left: auto;
+  width: 160px;
+  height: 160px;
+}
 
-  .name {
-    margin-right: auto;
-    align-self: flex-end;
-  }
+.name {
+  margin-right: auto;
+  align-self: flex-end;
+}
 
-  .item {
-    margin-left: auto;
-    align-self: center;
-    font-size: x-large;
-    height: 3vh;
-    width: 11vh;
-  }
+.item {
+  margin-left: auto;
+  align-self: center;
+  font-size: x-large;
+  height: 3vh;
+  width: 11vh;
+}
 
-  .form-control {
-    margin-left: auto;
-    margin-right: auto;
-  }
+.form-control {
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .daysform {
-    width: 25%;
+.daysform {
+  width: 25%;
 
-    margin-left: auto;
-    margin-right: auto;
-  }
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .input-group {
-    height: 3vh;
-    width: 100%;
-    align-self: center;
-    margin-right: auto;
-  }
+.input-group {
+  height: 3vh;
+  width: 100%;
+  align-self: center;
+  margin-right: auto;
+}
 </style>

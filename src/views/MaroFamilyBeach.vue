@@ -112,79 +112,85 @@
       </div>
       <div
         class="row justify-content-start"
-        style="margin-bottom: 10vh; position: relative"></div>
+        style="margin-bottom: 10vh; position: relative"
+      ></div>
     </div>
   </div>
 </template>
 
 <script>
-  import OpenRegister from "@/components/OpenRegister.vue";
-  import Navigation from "@/components/Navigation.vue";
-  import { useRoute } from "vue-router";
-  export default {
-    name: "MaroFamilyBeach",
-    data() {
-      return {
-        // key: "",
+import OpenRegister from "@/components/OpenRegister.vue";
+import Navigation from "@/components/Navigation.vue";
+import maro from "@/views/MaroFamilyBeach.vue";
+import { useRoute } from "vue-router";
+export default {
+  name: "MaroFamilyBeach",
+  data() {
+    return {
+      // key: "",
+    };
+  },
+  components: {
+    OpenRegister,
+    Navigation,
+  },
+  methods: {
+    // parasol() {
+    //   localStorage.setItem("id", JSON.stringify(this.key));
+    //   console.log(localStorage);
+    //   this.$router.push({ name: "payment" }); //kasnije promijeni
+    // },
+
+    btnid(buttonvalue) {
+      let name = {
+        name: maro.name,
+        id: buttonvalue,
       };
-    },
-    components: {
-      OpenRegister,
-      Navigation,
-    },
-    methods: {
-      // parasol() {
-      //   localStorage.setItem("id", JSON.stringify(this.key));
-      //   console.log(localStorage);
-      //   this.$router.push({ name: "payment" }); //kasnije promijeni
-      // },
+      localStorage.setItem("id", JSON.stringify(name));
 
-      btnid(buttonvalue) {
-        localStorage.setItem("id", JSON.stringify(buttonvalue));
+      this.$router.push({ name: "payment" });
 
-        this.$router.push({ name: "payment" });
-
-        //kasnije promijeni
-      },
+      //kasnije promijeni
     },
-  };
+  },
+};
 </script>
 <style lang="scss">
-  .id {
-    width: 10vh;
-    font-weight: lighter;
-    font-style: italic;
-    text-align: center;
-  }
-  .sbtn:hover {
-    animation: pulse 1s;
-    transform: scale(1.5);
-  }
-  .sbtn {
-    background-image: url("@/assets/suncobre.png");
-    background-position: center;
-    background-color: transparent;
-    background-size: cover;
-    cursor: pointer;
-    border: none;
-    width: 8vh;
-    height: 8vh;
-  }
-  .sun {
-    margin-left: auto;
-    margin-right: auto;
-    height: 8vh;
-    width: 8vh;
-  }
+.id {
+  width: 10vh;
+  font-weight: lighter;
+  font-style: italic;
+  text-align: center;
+}
+.sbtn:hover {
+  animation: pulse 1s;
+  transform: scale(1.5);
+}
+.sbtn {
+  background-image: url("@/assets/suncobre.png");
+  background-position: center;
+  background-color: transparent;
+  background-size: cover;
+  cursor: pointer;
+  border: none;
+  width: 8vh;
+  height: 8vh;
+}
+.sun {
+  margin-left: auto;
+  margin-right: auto;
+  height: 8vh;
+  width: 8vh;
+}
 
-  .imgbk {
-    background-image: url("@/assets/plaza.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 90vh;
-    width: initial;
-    margin: 2vh;
-    align-content: center;
-  }
+.imgbk {
+  background-image: url("@/assets/plaza.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 90vh;
+  width: initial;
+  margin: 2vh;
+  align-content: center;
+}
 </style>

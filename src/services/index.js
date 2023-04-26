@@ -32,24 +32,66 @@ Service.interceptors.response.use(
 // naš objekt za sve pozive koji se dotiču `Post`ova
 let Posts = {
   getAll(searchTerm) {
-    return Service.get(`/posts?title=${searchTerm}`);
+    return Service.get(`/posts?title=${searchTerm}`); //to ti ne treba
   },
 };
 
+let ajD;
+
 let Payment = {
-  async payment(chairs, date, gname, gsurname, roomnb, cashState, roomState) {
+  async payment(
+    beach,
+    cashier,
+    chairs,
+    date,
+    parasol,
+    gname,
+    gsurname,
+    roomnb,
+    cashState
+  ) {
     let response = await Service.post("/payment", {
       // FAli jos ruta za admina!!!
+      beach: beach,
+      cashier: cashier,
       chairs: chairs,
       date: date,
+      parasol: parasol,
       gname: gname,
       gsurname: gsurname,
       roomnb: roomnb,
       cash: cashState,
-      room: roomState,
     });
 
+    ajD = response.data;
+
     return true;
+  },
+
+  async getOne(id) {
+    let response = await Service.get(`/invoice/${id}`);
+
+    let doc = response.data;
+
+    return {
+      beach: doc.beach,
+      cashier: doc.cashier,
+      chairs: doc.chairs,
+      parasol: doc.parasol,
+      days: doc.days,
+      one: doc.one,
+      three: doc.three,
+      seven: doc.seven,
+      extraChairs: doc.extraChairs,
+      gname: doc.gname,
+      gsurname: doc.gsurname,
+      roomnb: doc.roomnb,
+      dateBegin: doc.dateBegin,
+      dateEnd: doc.dateEnd,
+      time: doc.time,
+      cash: doc.cash,
+      total: doc.total,
+    };
   },
 };
 
@@ -75,10 +117,27 @@ let Auth = {
     return JSON.parse(localStorage.getItem("user"));
   },
 
-  getID() {
+  getNameId() {
     return JSON.parse(localStorage.getItem("id"));
   },
 
+  getId() {
+    let user = Auth.getNameId();
+    if (user && user.id) {
+      return user.id;
+    } else {
+      return false;
+    }
+  },
+
+  getName() {
+    let user = Auth.getNameId();
+    if (user && user.name) {
+      return user.name;
+    } else {
+      return false;
+    }
+  },
   getToken() {
     let user = Auth.getUser();
     if (user && user.token) {
@@ -117,7 +176,15 @@ let Auth = {
       }
     },
     get id() {
-      let user = Auth.getID();
+      let user = Auth.getId();
+
+      if (user) {
+        return user;
+      }
+    },
+
+    get name() {
+      let user = Auth.getName();
 
       if (user) {
         return user;
@@ -125,4 +192,4 @@ let Auth = {
     },
   },
 };
-export { Service, Posts, Auth, Payment }; // exportamo Service za ručne pozive ili Posts za
+export { Service, Posts, Auth, Payment, ajD }; // exportamo Service za ručne pozive ili Posts za

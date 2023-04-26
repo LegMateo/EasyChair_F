@@ -7,6 +7,7 @@ import SurfmaniaBeach from "../views/SurfmaniaBeach.vue";
 import Payment from "@/views/Payment.vue";
 import Login from "@/views/Login.vue";
 import LoginAdmin from "@/views/LoginAdmin.vue";
+import Invoice from "@/views/Invoice.vue";
 import { Auth } from "@/services";
 
 const routes = [
@@ -55,6 +56,16 @@ const routes = [
     path: "/loginadmin",
     name: "loginadmin",
     component: LoginAdmin,
+    meta: {
+      hideNavbar: true,
+    },
+  },
+
+  {
+    path: "/invoice/:id",
+    name: "invoice",
+    props: true,
+    component: () => import("@/views/Invoice.vue"),
     meta: {
       hideNavbar: true,
     },
