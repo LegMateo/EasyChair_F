@@ -119,6 +119,7 @@
                 <input
                   v-model="gname"
                   type="text"
+                  pattern="[A-Za-z]{2,50}"
                   id="gname"
                   minlength="2"
                   class="guestnamex form-control"
@@ -137,6 +138,7 @@
                 <input
                   v-model="gsurname"
                   type="text"
+                  pattern="[A-Za-z]{2,50}"
                   id="gsurname"
                   minlength="2"
                   class="guestnamex form-control"
@@ -252,6 +254,7 @@ export default {
       isHiddenc: true,
       beach: Auth.state.name,
       cashier: `${Auth.state.userName} ${Auth.state.userSurname}`,
+      username: Auth.state.userUsername,
       date: "",
       chairs: "",
       parasol: Auth.state.id,
@@ -269,6 +272,7 @@ export default {
       let success = await Payment.payment(
         this.beach,
         this.cashier,
+        this.username,
         this.chairs,
         this.date,
         this.parasol,

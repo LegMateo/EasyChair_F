@@ -29,10 +29,25 @@ Service.interceptors.response.use(
   }
 );*/
 
-// naš objekt za sve pozive koji se dotiču `Post`ova
 let Posts = {
-  getAll(searchTerm) {
-    return Service.get(`/posts?title=${searchTerm}`); //to ti ne treba
+  async getAll() {
+    let response = await Service.get("/admin");
+
+    let doc = response.data;
+
+    doc = doc.map((doc) => {
+      return {
+        id: doc._id,
+        chairs: doc.sumChairs,
+        total: doc.total,
+        days: doc.days,
+        one: doc.one,
+        three: doc.three,
+        seven: doc.seven,
+      };
+    });
+
+    return doc;
   },
 };
 
@@ -42,6 +57,7 @@ let Payment = {
   async payment(
     beach,
     cashier,
+    username,
     chairs,
     date,
     parasol,
@@ -54,6 +70,7 @@ let Payment = {
       // FAli jos ruta za admina!!!
       beach: beach,
       cashier: cashier,
+      username: username,
       chairs: chairs,
       date: date,
       parasol: parasol,
@@ -96,6 +113,18 @@ let Payment = {
 };
 
 let Auth = {
+  async register(name, surname, username, password) {
+    let response = await Service.post("/admin", {
+      // FAli jos ruta za admina!!!
+      name: name,
+      surname: surname,
+      username: username,
+      password: password,
+    });
+
+    return true;
+  },
+
   async login(username, password) {
     let response = await Service.post("/login", {
       // FAli jos ruta za admina!!!
@@ -162,9 +191,16 @@ let Auth = {
     get authenticated() {
       return Auth.authenticated();
     },
+    get userUsername() {
+      let user = Auth.getUser();
+
+      if (user) {
+        return user.username;
+      }
+    },
     get userName() {
       let user = Auth.getUser();
-      //console.log(user.name);
+
       if (user) {
         return user.name;
       }

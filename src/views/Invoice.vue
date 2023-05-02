@@ -23,7 +23,7 @@
         </div>
 
         <br />
-        <div class="container-fluid" style="position: relative" v-if="cards">
+        <div class="container-fluid" v-if="cards">
           <div class="row">
             <div class="col-6 desc">
               <h3>Description</h3>
@@ -259,6 +259,7 @@ h1 {
 
 h6 {
   margin-right: auto;
+  margin-left: auto;
 }
 
 h3 {

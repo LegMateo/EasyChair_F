@@ -9,13 +9,7 @@
 </template>
 
 <script>
-import OpenRegister from "@/components/OpenRegister.vue";
-import Navigation from "@/components/Navigation.vue";
 export default {
   name: "Reverol",
-  components: {
-    OpenRegister,
-    Navigation,
-  },
 };
 </script>

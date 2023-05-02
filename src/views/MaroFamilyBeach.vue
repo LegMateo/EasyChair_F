@@ -119,8 +119,6 @@
 </template>
 
 <script>
-import OpenRegister from "@/components/OpenRegister.vue";
-import Navigation from "@/components/Navigation.vue";
 import maro from "@/views/MaroFamilyBeach.vue";
 import { useRoute } from "vue-router";
 export default {
@@ -130,10 +128,7 @@ export default {
       // key: "",
     };
   },
-  components: {
-    OpenRegister,
-    Navigation,
-  },
+
   methods: {
     // parasol() {
     //   localStorage.setItem("id", JSON.stringify(this.key));

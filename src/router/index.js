@@ -8,6 +8,7 @@ import Payment from "@/views/Payment.vue";
 import Login from "@/views/Login.vue";
 import LoginAdmin from "@/views/LoginAdmin.vue";
 import Invoice from "@/views/Invoice.vue";
+import Admin from "@/views/Admin.vue";
 import { Auth } from "@/services";
 
 const routes = [
@@ -62,10 +63,20 @@ const routes = [
   },
 
   {
+    path: "/admin",
+    name: "admin",
+    component: Admin,
+    meta: {
+      hideNavbar: true,
+    },
+  },
+
+  {
     path: "/invoice/:id",
     name: "invoice",
     props: true,
-    component: () => import("@/views/Invoice.vue"),
+    component: Invoice,
+    //component: () => import("@/views/Invoice.vue"),
     meta: {
       hideNavbar: true,
     },

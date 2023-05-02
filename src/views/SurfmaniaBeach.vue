@@ -1,6 +1,5 @@
 <template>
   <div>
-    <OpenRegister></OpenRegister>
     <Navigation></Navigation>
     <h1>Surfmania Beach</h1>
     <p>
@@ -11,13 +10,7 @@
 </template>
 
 <script>
-import OpenRegister from "@/components/OpenRegister.vue";
-import Navigation from "@/components/Navigation.vue";
 export default {
   name: "SurfmaniaBeach",
-  components: {
-    OpenRegister,
-    Navigation,
-  },
 };
 </script>

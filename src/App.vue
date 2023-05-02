@@ -2,14 +2,16 @@
   <nav
     v-if="!$route.meta.hideNavbar"
     class="navbar bg-light"
-    style="padding-left: 10px; padding-right: 10px; position: sticky; top: 0">
+    style="padding-left: 10px; padding-right: 10px; position: sticky; top: 0"
+  >
     <a class="navbar-brand" href="#">
       <img
         src="@/assets/logo_beach.png"
         alt="Logo"
         width="45"
         height="45"
-        class="d-inline-block align-text-middle" />
+        class="d-inline-block align-text-middle"
+      />
       EasyChairPayment
     </a>
 
@@ -22,7 +24,8 @@
       type="button"
       data-bs-toggle="offcanvas"
       data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar">
+      aria-controls="offcanvasNavbar"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -30,7 +33,8 @@
       class="offcanvas offcanvas-end"
       tabindex="-1"
       id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel">
+      aria-labelledby="offcanvasNavbarLabel"
+    >
       <div class="offcanvas-header">
         <h5 v-if="auth.authenticated">
           {{ auth.userName }} {{ auth.userSurname }}
@@ -39,7 +43,8 @@
           type="button"
           class="btn-close"
           data-bs-dismiss="offcanvas"
-          aria-label="Close"></button>
+          aria-label="Close"
+        ></button>
       </div>
 
       <div class="offcanvas-body">
@@ -57,14 +62,16 @@
     <div class="row justify-content-md-center">
       <div
         class="col col-lg-6"
-        style="margin-top: 2%; padding-left: 3%; text-align: left">
+        style="margin-top: 2%; padding-left: 3%; text-align: left"
+      >
         <h1>Welcome User</h1>
       </div>
       <div class="col-6 ol-lg-6" style="margin-top: 2%">
         <button
           type="button"
           class="btn btn-primary btn-lg btn-block"
-          style="width: 80%">
+          style="width: 80%"
+        >
           Open cash register
         </button>
       </div>
@@ -80,7 +87,8 @@
                 class="page-link"
                 href="#"
                 aria-label="Previous"
-                style="position: inherit">
+                style="position: inherit"
+              >
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
               </a>
@@ -95,14 +103,16 @@
         <nav
           id="Next"
           aria-label="Page navigation example"
-          style="float: right">
+          style="float: right"
+        >
           <ul class="pagination">
             <li class="page-item">
               <a
                 class="page-link"
                 href="#"
                 aria-label="Previous"
-                style="position: inherit">
+                style="position: inherit"
+              >
                 <span class="sr-only">Next</span>
                 <span aria-hidden="true">&raquo;</span>
               </a>
@@ -117,68 +127,51 @@
 </template>
 
 <script>
-  import store from "@/store.js";
-  import MaroFamilyBeach from "@/views/MaroFamilyBeach.vue";
-  import ReverolBeach from "@/views/ReverolBeach.vue";
-  import SunsetBeach from "@/views/SunsetBeach.vue";
-  import MarinaBeach from "@/views/MarinaBeach.vue";
-  import SurfmaniaBeach from "@/views/SurfmaniaBeach.vue";
-  import Navigation from "@/components/Navigation.vue";
-  import OpenRegister from "@/components/OpenRegister.vue";
-  import { Auth } from "@/services";
-  export default {
-    data() {
-      return {
-        auth: Auth.state,
-      };
+import { Auth } from "@/services";
+export default {
+  data() {
+    return {
+      auth: Auth.state,
+    };
+  },
+  methods: {
+    logout() {
+      Auth.logout();
+      this.$router.go();
     },
-    methods: {
-      logout() {
-        Auth.logout();
-        this.$router.go();
-      },
-    },
-    components: {
-      MaroFamilyBeach,
-      ReverolBeach,
-      SunsetBeach,
-      MarinaBeach,
-      SurfmaniaBeach,
-      Navigation,
-      OpenRegister,
-    },
-  };
+  },
+};
 </script>
 
 <style lang="scss">
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
     color: #2c3e50;
-  }
 
-  nav {
-    padding: 30px;
-
-    a {
-      font-weight: bold;
-      color: #2c3e50;
-
-      &.router-link-exact-active {
-        color: #42b983;
-      }
+    &.router-link-exact-active {
+      color: #42b983;
     }
   }
+}
 
-  .dejt {
-    position: static;
-    text-align: right;
-  }
+.dejt {
+  position: static;
+  text-align: right;
+}
 
-  .slide {
-    min-height: 75vh;
-    box-sizing: border-box;
-  }
+.slide {
+  min-height: 75vh;
+  box-sizing: border-box;
+}
 </style>
