@@ -66,9 +66,9 @@ const routes = [
     path: "/admin",
     name: "admin",
     component: Admin,
-    meta: {
-      hideNavbar: true,
-    },
+    // meta: {
+    //   hideNavbar: true,
+    // },
   },
 
   {
@@ -89,8 +89,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const javne = "/loginadmin";
-  const loginPotreban = !javne.includes(to.name);
+  const javne = ["/loginadmin", "/login"];
+  const loginPotreban = !javne.includes(to.path);
   const user = Auth.getUser();
 
   if (loginPotreban && !user) {

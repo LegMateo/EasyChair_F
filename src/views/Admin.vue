@@ -60,7 +60,7 @@
                       <input
                         v-model="username"
                         type="text"
-                        pattern="[A-Za-z]{2,50}"
+                        pattern="[A-Za-z]{2,10}"
                         id="csurname"
                         minlength="3"
                         class="cashier form-control"

@@ -8,7 +8,8 @@
             alt="Logo"
             width="160"
             height="160"
-            class="d-inline-block align-text-middle" />
+            class="d-inline-block align-text-middle"
+          />
         </div>
 
         <div class="col-6 name">
@@ -21,7 +22,8 @@
         @submit.prevent="login"
         class="row g-3 needs-validation"
         style="margin-top: 3vh; height: 6vh"
-        novalidate>
+        novalidate
+      >
         <div class="col-4 loginpass">
           <label for="validationCustom001" class="form-label"
             >Username(admin)</label
@@ -33,7 +35,8 @@
             maxlength="22"
             class="form-control"
             id="validationCustom001"
-            required />
+            required
+          />
 
           <label for="validationCustom001" class="form-label"
             >Password(admin)</label
@@ -45,7 +48,8 @@
             maxlength="22"
             class="form-control"
             id="validationCustom001"
-            required />
+            required
+          />
         </div>
 
         <div class="row" style="margin-top: 14vh; height: 7vh">
@@ -61,7 +65,8 @@
             id="roombtn"
             type="submit"
             class="btn btn-primary btn-lg btn btnlg"
-            @click="validcheck()">
+            @click="validcheck()"
+          >
             Login
           </button>
         </div>
@@ -71,104 +76,104 @@
 </template>
 
 <script>
-  import { Auth } from "@/services";
+import { Auth } from "@/services";
 
-  export default {
-    name: "AdminLogin",
-    data() {
-      return {
-        username: "",
-        password: "",
-      };
+export default {
+  name: "AdminLogin",
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+
+  methods: {
+    async login() {
+      let success = await Auth.loginAdmin(this.username, this.password);
+
+      if (success == true) {
+        this.$router.push({ name: "admin" }); //kasnije promijeni
+      }
     },
 
-    methods: {
-      async login() {
-        let success = await Auth.login(this.username, this.password);
+    validcheck() {
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        "use strict";
 
-        if (success == true) {
-          this.$router.push({ name: "marofamilybeach" }); //kasnije promijeni
-        }
-      },
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
 
-      validcheck() {
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function () {
-          "use strict";
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
 
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.querySelectorAll(".needs-validation");
-
-          // Loop over them and prevent submission
-          Array.prototype.slice.call(forms).forEach(function (form) {
-            form.addEventListener(
-              "submit",
-              function (event) {
-                if (!form.checkValidity()) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
-
-                form.classList.add("was-validated");
-              },
-              false
-            );
-          });
-        })();
-      },
-
-      toCashier() {
-        this.$router.push("/login");
-      },
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
     },
-  };
+
+    toCashier() {
+      this.$router.push("/login");
+    },
+  },
+};
 </script>
 
 <style>
-  .logina {
-    width: 40%;
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: lighter;
-    font-style: italic;
-    text-align: right;
-    padding-right: 0vh;
-  }
-  .btnlg {
-    width: 25%;
-    background-color: rgba(43, 109, 252, 0.678);
-    color: rgb(28, 43, 214);
-  }
+.logina {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: lighter;
+  font-style: italic;
+  text-align: right;
+  padding-right: 0vh;
+}
+.btnlg {
+  width: 25%;
+  background-color: rgba(43, 109, 252, 0.678);
+  color: rgb(28, 43, 214);
+}
 
-  .btnlg:hover {
-    background-color: rgb(28, 43, 214) !important;
-    color: #97c9fc !important;
-  }
+.btnlg:hover {
+  background-color: rgb(28, 43, 214) !important;
+  color: #97c9fc !important;
+}
 
-  label {
-    font-weight: lighter;
-    font-style: italic;
-    text-align: left;
-    float: left;
-  }
+label {
+  font-weight: lighter;
+  font-style: italic;
+  text-align: left;
+  float: left;
+}
 
-  .logo {
-    margin-left: auto;
-    width: 160px;
-    height: 160px;
-  }
+.logo {
+  margin-left: auto;
+  width: 160px;
+  height: 160px;
+}
 
-  .name {
-    margin-right: auto;
-    width: auto;
-  }
+.name {
+  margin-right: auto;
+  width: auto;
+}
 
-  .loginpass {
-    height: 3vh;
-    width: 40%;
+.loginpass {
+  height: 3vh;
+  width: 40%;
 
-    align-self: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

@@ -30,6 +30,20 @@ Service.interceptors.response.use(
 );*/
 
 let Posts = {
+  async deleteOne(id) {
+    let response = await Service.delete(`/admin/${id}`);
+    return true;
+  },
+  async getChange(id, new_password, new_username, old_username) {
+    await Service.patch("/admin", {
+      id: id,
+      new_password: new_password,
+      new_username: new_username,
+      old_username: old_username,
+    });
+
+    return true;
+  },
   async getAll() {
     let response = await Service.get("/admin");
 
@@ -37,13 +51,14 @@ let Posts = {
 
     doc = doc.map((doc) => {
       return {
-        id: doc._id,
+        _id: doc._id,
         chairs: doc.sumChairs,
         total: doc.total,
         days: doc.days,
         one: doc.one,
         three: doc.three,
         seven: doc.seven,
+        id: doc.id,
       };
     });
 
@@ -125,9 +140,21 @@ let Auth = {
     return true;
   },
 
+  async loginAdmin(username, password) {
+    let response = await Service.post("/loginadmin", {
+      username: username,
+      password: password,
+    });
+
+    let user = response.data;
+
+    localStorage.setItem("user", JSON.stringify(user));
+
+    return true;
+  },
+
   async login(username, password) {
     let response = await Service.post("/login", {
-      // FAli jos ruta za admina!!!
       username: username,
       password: password,
     });
