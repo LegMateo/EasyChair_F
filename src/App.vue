@@ -1,83 +1,134 @@
 <template>
   <nav
+    @click="getData"
     v-if="!$route.meta.hideNavbar"
     class="navbar bg-light"
     style="padding-left: 10px; padding-right: 10px; position: sticky; top: 0"
   >
-    <a class="navbar-brand" href="#">
-      <img
-        src="@/assets/logo_beach.png"
-        alt="Logo"
-        width="45"
-        height="45"
-        class="d-inline-block align-text-middle"
-      />
-      EasyChairPayment
-    </a>
-
-    <h2 class="dejt">
-      <span id="datum"></span>
-    </h2>
-
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div
-      class="offcanvas offcanvas-end"
-      tabindex="-1"
-      id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel"
-    >
-      <div class="offcanvas-header">
-        <h5 v-if="auth.authenticated">
-          {{ auth.userName }} {{ auth.userSurname }}
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img
+            src="@/assets/logo_beach.png"
+            alt="Logo"
+            width="45"
+            height="45"
+            class="d-inline-block align-text-middle"
+          />
+          EasyChairPayment
+        </a>
       </div>
 
-      <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <span v-if="auth.authenticated">
-            <a @click="logout" class="btn btn-info my-2 my-sm-0 mr-2" href="#"
-              >Logout</a
-            >
-          </span>
-        </ul>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="offcanvas offcanvas-end"
+        tabindex="-1"
+        id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div class="container-fluid">
+          <div class="d-flex justify-content-end align-items-right">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
+
+        <h2
+          class="text-center flex-grow-1"
+          style="padding-top: 1vh"
+          v-if="auth.authenticated && !auth.isAdmin"
+        >
+          {{ auth.userName }} {{ auth.userSurname }}
+        </h2>
+        <div
+          class="offcanvas-header"
+          v-if="auth.authenticated && !auth.isAdmin"
+        >
+          <div class="mt-4">
+            <div class="row" style="padding-bottom: 10px">
+              <div class="col-4">
+                <div class="mt-3">
+                  <p class="mb-0 text-muted">1 Day Reservations</p>
+                  <h4>{{ usersData.one }}</h4>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="mt-3">
+                  <p class="mb-0 text-muted">3 Day Reservations</p>
+                  <h4>{{ usersData.three }}</h4>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="mt-3">
+                  <p class="mb-0 text-muted">7 Day reservations</p>
+                  <h4>{{ usersData.seven }}</h4>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="padding-bottom: 10px">
+              <div class="col-4">
+                <div class="mt-3">
+                  <p class="mb-0 text-muted">Total Days Reserved</p>
+                  <h4>{{ usersData.days }}</h4>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="mt-3">
+                  <p class="mb-0 text-muted">Total Chairs Reserved</p>
+                  <h4>{{ usersData.sumChairs }}</h4>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="mt-3">
+                  <p class="mb-0 text-muted">Total Earnings</p>
+                  <h4>{{ usersData.total }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="offcanvas-body"
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-bottom: 6vh;
+          "
+        >
+          <div></div>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <span v-if="auth.authenticated">
+                <a
+                  @click="logout"
+                  class="btn btn-info btn-lg my-2 my-sm-0"
+                  href="#"
+                  >Logout</a
+                >
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>
-  <div class="container-fluid" v-if="!$route.meta.hideNavbar">
-    <div class="row justify-content-md-center">
-      <div
-        class="col col-lg-6"
-        style="margin-top: 2%; padding-left: 3%; text-align: left"
-      >
-        <h1>Welcome User</h1>
-      </div>
-      <div class="col-6 ol-lg-6" style="margin-top: 2%">
-        <button
-          type="button"
-          class="btn btn-primary btn-lg btn-block"
-          style="width: 80%"
-        >
-          Open cash register
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="container" style="max-width: 90%" v-if="!$route.meta.hideNavbar">
+
+  <!----
+  <div class="container">
     <div class="row justify-content-md-center">
       <div class="col col-lg-2">
         <nav aria-label="Page navigation example" id="Prev">
@@ -121,29 +172,44 @@
         </nav>
       </div>
     </div>
-  </div>
+  </div>  --->
 
   <router-view />
 </template>
 
 <script>
-import { Auth } from "@/services";
+import { Auth, Posts } from "@/services";
 export default {
   data() {
     return {
       auth: Auth.state,
+      usersData: "",
     };
   },
+
   methods: {
     logout() {
       Auth.logout();
       this.$router.go();
+    },
+
+    async getData() {
+      this.usersData = await Posts.getUserData();
+
+      //console.log(this.usersData);
     },
   },
 };
 </script>
 
 <style lang="scss">
+.offcanvas-header {
+  padding-left: 2.3vh;
+}
+.btn-close {
+  padding: 3vh;
+  font-size: large;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -165,13 +231,12 @@ nav {
   }
 }
 
-.dejt {
-  position: static;
-  text-align: right;
-}
-
 .slide {
   min-height: 75vh;
   box-sizing: border-box;
+}
+
+.flex-grow-1 {
+  flex-grow: 0;
 }
 </style>

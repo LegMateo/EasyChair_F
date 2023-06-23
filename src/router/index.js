@@ -89,6 +89,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const root = ["/"];
   const javne = ["/loginadmin", "/login"];
   const loginPotreban = !javne.includes(to.path);
   const user = Auth.getUser();
@@ -99,6 +100,7 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
+  /// sta ako le ulogiran i unese rucno krivu rutu???
   next();
 });
 

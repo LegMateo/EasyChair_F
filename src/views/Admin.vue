@@ -167,7 +167,7 @@ export default {
     },
   },
 
-  beforeMount() {
+  mounted() {
     this.fetchUsers();
   },
 

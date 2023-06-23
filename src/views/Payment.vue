@@ -283,12 +283,11 @@ export default {
       );
 
       if (success == true) {
-        this.$router.push({ name: "marofamilybeach" }); //kasnije promijeni
+        this.$router.go(-1); //kasnije promijeni
 
         const ruuta = this.$router.resolve({
-          path: `/invoice/${ajD.id}`,
+          path: `/invoice/${ajD.id_}`,
         });
-
         window.open(ruuta.href, "_blank");
       }
     },

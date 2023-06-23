@@ -1,4 +1,4 @@
-import axios from "axios"; // instanca axios-a za potrebe Fipugram backenda
+import axios from "axios";
 import $router from "@/router";
 
 let Service = axios.create({
@@ -6,16 +6,12 @@ let Service = axios.create({
   timeout: 1000,
 });
 
-/*
 Service.interceptors.request.use((request) => {
-  let token = Auth.getToken();
-  if (!token) {
-    $router.go();
-    return;
-  } else {
-    request.headers["Authorization"] = "Bearer" + token;
+  try {
+    request.headers["Authorization"] = "Bearer " + Auth.getToken();
+  } catch (e) {
+    console.error(e);
   }
-
   return request;
 });
 
@@ -24,11 +20,58 @@ Service.interceptors.response.use(
   (error) => {
     if (error.response.status == 401 || error.response.status == 403) {
       Auth.logout();
-      $router.go();
+      //$router.go();
     }
   }
-);*/
+);
+let Disable = {
+  async disableSurf() {
+    let response = await Service.get("/surfmaniabeach");
 
+    let user = response.data;
+
+    //console.log(user.disabledParasols);
+
+    return user.disabledParasols.SurfmaniaBeach;
+  },
+  async disableMaro() {
+    let response = await Service.get("/maro");
+
+    let user = response.data;
+
+    //console.log(user.disabledParasols);
+    //console.log(Object.values(user.disabledParasols)[1]);
+    //console.log(user.disabledParasols.Reverol);
+    return user.disabledParasols.MaroFamilyBeach;
+  },
+  async disableReverol() {
+    let response = await Service.get("/reverolbeach");
+
+    let user = response.data;
+
+    // console.log(user.disabledParasols.Reverol.parasol);
+
+    return user.disabledParasols.Reverol;
+  },
+  async disableSunset() {
+    let response = await Service.get("/sunsetbeach");
+
+    let user = response.data;
+
+    //console.log(user.disabledParasols);
+
+    return user.disabledParasols.SunsetBeach;
+  },
+  async disableMarina() {
+    let response = await Service.get("/marinabeach");
+
+    let user = response.data;
+
+    //console.log(user.disabledParasols);
+
+    return user.disabledParasols.MarinaBeach;
+  },
+};
 let Posts = {
   async deleteOne(id) {
     let response = await Service.delete(`/admin/${id}`);
@@ -64,6 +107,16 @@ let Posts = {
 
     return doc;
   },
+
+  async getUserData() {
+    let response = await Service.get("/");
+
+    //let response = { id: ["q", "2"], id: "dd" };
+    let doc = response.data[0];
+    //console.log(doc);
+
+    return doc;
+  },
 };
 
 let ajD;
@@ -95,7 +148,7 @@ let Payment = {
       cash: cashState,
     });
 
-    ajD = response.data;
+    ajD = response.data.id;
 
     return true;
   },
@@ -145,7 +198,6 @@ let Auth = {
       username: username,
       password: password,
     });
-
     let user = response.data;
 
     localStorage.setItem("user", JSON.stringify(user));
@@ -198,9 +250,7 @@ let Auth = {
     let user = Auth.getUser();
     if (user && user.token) {
       return user.token;
-    } else {
-      return false;
-    }
+    } else return false;
   },
 
   authenticated() {
@@ -238,6 +288,13 @@ let Auth = {
         return user.surname;
       }
     },
+
+    get isAdmin() {
+      let user = Auth.getUser();
+      if (user && user.username === "admin") {
+        return user.username;
+      }
+    },
     get id() {
       let user = Auth.getId();
 
@@ -255,4 +312,4 @@ let Auth = {
     },
   },
 };
-export { Service, Posts, Auth, Payment, ajD }; // exportamo Service za ručne pozive ili Posts za
+export { Service, Posts, Auth, Payment, ajD, Disable }; // exportamo Service za ručne pozive ili Posts za
