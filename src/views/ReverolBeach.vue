@@ -536,8 +536,6 @@ export default {
           const modalWidth = modalRect.width;
           const windowWidth = window.innerWidth;
           const windowHeight = window.innerHeight;
-          const scrollX = window.pageXOffset;
-          const scrollY = window.pageYOffset;
 
           let modalTop =
             buttonRect.bottom - modalRect.height + window.pageYOffset;

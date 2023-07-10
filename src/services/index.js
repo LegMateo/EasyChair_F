@@ -2,7 +2,7 @@ import axios from "axios";
 import $router from "@/router";
 
 let Service = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "https://backend-0epy.onrender.com",
   timeout: 1000,
 });
 
